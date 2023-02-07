@@ -70,7 +70,7 @@ export function Header({
             </Link>
           ))}
         </div>
-        <Link to={'/test'}>Test</Link>
+        <Link to={'/venia'} className="text-gray-200 hover:text-white">Venia Magento</Link>
         <div className="flex-1 md:pr-8">
         </div>
         <div className="">

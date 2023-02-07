@@ -116,7 +116,6 @@ export default function App() {
           onCartIconClick={() => setOpen(!open)}
           cartQuantity={activeOrder?.totalQuantity ?? 0}
         />
-        <Test/>
         <main className="">
           <Outlet
             context={{
