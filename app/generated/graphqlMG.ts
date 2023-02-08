@@ -3908,8 +3908,8 @@ export const SearchFacetValuesDocument = gql`
     `;
 
 
-export const testData = gql`
-query collectionsVenia {
+export const GET_CATEGORIES = gql`
+query collectionsVenia1 {
     categories:categoryList {
         children {
             name
@@ -3924,15 +3924,72 @@ query collectionsVenia {
     }
 }
 `
+export const GET_PRODUCTS_PAGE = gql`
+query getProductsForPage($value: String){
+  products(filter: {category_uid: {eq: $value}}) {
+        items {
+            name
+            uid
+            url_key
+            image {
+                url
+            }
+            price_range {
+                minimum_price {
+                    regular_price {
+                        currency
+                        value
+                    }
+                }
+            }
+        }
+    }
+}
+`
+
+export const GET_SINGLE_PRODUCT = gql`
+    query getSinglePage($value: String) {
+      singlePage:products(filter: {url_key: {eq: $value}})  {
+    items {
+      uid
+      url_key
+      name
+      price_range {
+        maximum_price {
+          final_price {
+            currency
+            value
+          }
+        }
+      }
+      description {
+        html
+      }
+      media_gallery{
+        url
+      }
+      image{
+        url
+      }
+    }
+  }
+}
+`
 // export type Requester<> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdkMG(requesterMG: any) {
   return {
-    // collectionsVenia(variables?: CollectionsQueryVariables, options?: C): Promise<CollectionsQuery> {
-    //   return requester<CollectionsQuery, CollectionsQueryVariables>(CollectionsDocument, variables, options) as Promise<CollectionsQuery>;
-    // },
     collectionsVenia(variables?:any, options?: any) {
-      return requesterMG(testData, variables, options);
+      return requesterMG(GET_CATEGORIES, variables, options);
     },
+    categoryProducts(variables?:any, options?: any) {
+      return requesterMG(GET_PRODUCTS_PAGE, variables, options);
+    },
+    pageProduct(variables?:any, options?: any) {
+      return requesterMG(GET_SINGLE_PRODUCT, variables, options)
+    }
+    // product(variables?: ProductQueryVariables, options?: C): Promise<ProductQuery> {
+    //   return requester<ProductQuery, ProductQueryVariables>(ProductDocument, variables, options) as Promise<ProductQuery>;
+    // }, good 
   }
 }
 export type SdkMG = ReturnType<typeof getSdkMG>;

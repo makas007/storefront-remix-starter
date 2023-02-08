@@ -7,21 +7,22 @@ import { getCollectionsVenia } from "~/providers/testData/testProvider";
 
 export async function loader({ request }: any) {
     const data1 = await getCollections(request);
-    // console.log(data1, 'data1');
+
     
     const categories = await getCollectionsVenia(request);
-    // console.log(data2, 'data2');
+
 
     return {
-        data1,
         categories
     };
   }
 
 export default function Test2(){
     const {categories}:any = useLoaderData()
-    console.log(categories," !!!!!!!!!!!!!!!!!!");
+    // console.log(categories," !!!!!!!!!!!!!!!!!!");
     const [active, setActive] = useState("");
+    // console.log(useLoaderData);
+    
 
 
 
@@ -39,7 +40,7 @@ export default function Test2(){
                         <ul className="dropdown transition duration-300 ease-in">
                             {item.children?.map((child: any) => (
                                 <li key={child.uid} className="border-solid border-t-2 pb-1">
-                                    <Link to={`./products/${child.url_key}`}
+                                    <Link to={`./products/${child.uid}`}
                                         id={child.uid}
                                         className="text-xl text-sky-700 h-6"
                                     >{child.name}</Link>
